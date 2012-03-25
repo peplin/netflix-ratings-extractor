@@ -1,0 +1,9 @@
+Netflix Movie Ratings Extractor
+===============================
+
+This code is mirrored from http://userscripts.org/scripts/show/32964. It was
+updated 03/25/2012 by Chris Peplin to work with the latest version of the
+Netflix website.
+
+The code is provided by the original author, Maarten van Egmond, under the GPL
+license (http://www.gnu.org/copyleft/gpl.html).
