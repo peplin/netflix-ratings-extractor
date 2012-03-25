@@ -177,9 +177,6 @@
         if (document.getElementById('col_year').checked) {
             result += detail.year + '\t';
         }
-        if (document.getElementById('col_genre').checked) {
-            result += detail.genre + '\t';
-        }
         if (document.getElementById('col_rating').checked) {
             result += detail.rating + '\t';
         }
@@ -670,7 +667,6 @@
         addCheckbox(td, 'col_title', 'Title', true);
         addCheckbox(td, 'col_alttitle', 'Alternate Title', true, undefined, false);
         addCheckbox(td, 'col_year', 'Year', true, undefined, false);
-        addCheckbox(td, 'col_genre', 'Genre', true);
         addCheckbox(td, 'col_rating', 'Rating', true);
         addCheckbox(td, 'col_imdb_id', 'IMDB ID', false,
                 imdbColOptionsChanged, false);
@@ -1315,9 +1311,6 @@
         if (!document.getElementById('col_year').checked) {
             delete detail.year;
         }
-        if (!document.getElementById('col_genre').checked) {
-            delete detail.genre;
-        }
         if (!document.getElementById('col_rating').checked) {
             delete detail.rating;
         }
@@ -1356,7 +1349,7 @@
         // JavaScript does not support regex spanning multiple lines...
         // So, added "(?:.*?\n)*?" before the ".*?stars" part.
         //var regex = /"title"><a.*?\/(\d+?)\?trkid=.*?>(.*?)<.*?"list-titleyear">.*?\((.*?)\)<.*?("list-alttitle">(.*?)<.*?)?"list-genre">(.*?)<.*?sbmf-(\d+)"/gim;
-        var regex = /"title"><a.*?\/(\d+?)\?trkid=.*?>(.*?)<(?:.*?\n)*?.*?"genre">(.*?)<(?:.*?\n)*?.*?sbmf-(\d+)/gim;
+        var regex = /"title"><a.*?\/(\d+?)\?trkid=.*?>(.*?)<(?:.*?\n)*?.*?sbmf-(\d+)/gim;
         while (regex.test(text)) {
             seenOne = true;
 
@@ -1377,12 +1370,7 @@
             var detail = {
                 'id': RegExp.$1,
                 'title': RegExp.$2,
-                //'year': RegExp.$3,
-                //'alt': RegExp.$5,
-                //'genre': RegExp.$6,
-                //'rating': RegExp.$7 / 10
-                'genre': RegExp.$3,
-                'rating': RegExp.$4 / 10
+                'rating': RegExp.$3 / 10
             };
 
             if (GET_IMDB_DATA) {
@@ -1403,7 +1391,7 @@
             // JavaScript does not support regex spanning multiple lines...
             // So, added "(?:.*?\n)*?" before the ".*?stars" part.
             //var regex = /"title"><a.*?\/(\d+?)\?trkid=.*?>(.*?)<.*?"list-titleyear">.*?\((.*?)\)<.*?("list-alttitle">(.*?)<.*?)?"list-genre">(.*?)<.*?sbmf-(\d+)"/gim;
-            var regex = /"title">(?:.*?\n)*?.*?<a.*?\/(\d+?)\?trkid=.*?>(.*?)<(?:.*?\n)*?.*?genre">(.*?)<(?:.*?\n)*?.*?sbmf-(\d+)/gim;
+            var regex = /"title">(?:.*?\n)*?.*?<a.*?\/(\d+?)\?trkid=.*?>(.*?)<(?:.*?\n)*?.*?sbmf-(\d+)/gim;
             while (regex.test(text)) {
                 seenOne = true;
 
@@ -1424,12 +1412,7 @@
                 var detail = {
                     'id': RegExp.$1,
                     'title': RegExp.$2,
-                    //'year': RegExp.$3,
-                    //'alt': RegExp.$5,
-                    //'genre': RegExp.$6,
-                    //'rating': RegExp.$7 / 10
-                    'genre': RegExp.$3,
-                    'rating': RegExp.$4 / 10
+                    'rating': RegExp.$3 / 10
                 };
 
                 if (GET_IMDB_DATA) {
@@ -1451,15 +1434,14 @@
             // JavaScript does not support regex spanning multiple lines...
             // So, added "(?:.*?\n)*?" before the ".*?stars" part.
             //var regex = /"title"><a.*?\/(\d+?)\?trkid=.*?>(.*?)<.*?"list-titleyear">.*?\((.*?)\)<.*?("list-alttitle">(.*?)<.*?)?"list-genre">(.*?)<.*?sbmf-(\d+)"/gim;
-            var regex = /"title">(?:.*?\n)*?.*?<a.*?\/(\d+?)\?trkid=.*?>((.*?\n)*?.*?)<(?:.*?\n)*?.*?"genre">(.*?)<(?:.*?\n)*?.*?sbmf-(\d+)/gim;
+            var regex = /"title">(?:.*?\n)*?.*?<a.*?\/(\d+?)\?trkid=.*?>((.*?\n)*?.*?)<(?:.*?\n)*?.*?sbmf-(\d+)/gim;
             while (regex.test(text)) {
                 seenOne = true;
 
                 // TODO: account for 1/2 star ratings.
                 //var rating = Math.floor(RegExp.$7 / 10);
-                var rating = RegExp.$5 / 10;
+                var rating = RegExp.$4 / 10;
                 var ratingFloor = Math.floor(rating);
-                var genre = RegExp.$4;
 
                 // If no other ratings need to be exported, stop early.
                 if (stopEarly(ratingFloor)) {
@@ -1474,11 +1456,6 @@
                 var detail = {
                     'id': RegExp.$1,
                     'title': trim(RegExp.$2),
-                    //'year': RegExp.$3,
-                    //'alt': RegExp.$5,
-                    //'genre': RegExp.$6,
-                    //'rating': RegExp.$7 / 10
-                    'genre': genre,
                     'rating': rating
                 };
 
